@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<dialog id="step-configuration-dialog"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:pen="http://www.pentaho.org/2008/xul"
+        title="${FTL.StepConfigurationDialog.Title}"
+        resizable="true"
+        buttons="accept, cancel"
+        buttonlabelaccept="${Dialog.Ok}" buttonlabelcancel="${Dialog.Cancel}"
+        ondialogaccept="handler.onAccept()"
+        ondialogcancel="handler.onCancel()"
+        height="600" width="800"
+        appicon="ui/images/spoon.ico">
+    <hbox id="step-name-box">
+        <label value="${FTL.StepName.Label}" />
+        <textbox id="step-name" flex="1" multiline="false"/>
+    </hbox>
+    <vbox id="template-string-box" flex="1">
+        <label value="${FTL.TemplateString.Label}" />
+        <textbox id="template-string" flex="1" multiline="true"/>
+    </vbox>
+    <vbox>
+        <hbox id="output-field-box">
+            <label value="${FTL.OutputField.Label}" />
+            <textbox id="output-field" flex="1" multiline="false"/>
+        </hbox>
+    </vbox>
+    <tabbox>
+        <tabs id="tabs">
+            <tab label="${FTL.fields}"/>
+        </tabs>
+        <tabpanels>
+            <tabpanel>
+                <vbox>
+                    <tree flex="1" editable="false" seltype="cell" height="150"
+                          enableColumnDrag="true" id="fieldsTable" autocreatenewrows="true">
+                        <treecols id="column_list">
+                            <treecol id="name_col" label="${FTL.column-name}" pen:binding="name" editable="false" />
+                            <treecol id="type_col" label="${FTL.column-type}" pen:binding="typeDesc" editable="false"/>
+                        </treecols>
+                        <treechildren id="main_treechildren">
+                        </treechildren>
+                    </tree>
+                </vbox>
+            </tabpanel>
+        </tabpanels>
+    </tabbox>
+</dialog>
