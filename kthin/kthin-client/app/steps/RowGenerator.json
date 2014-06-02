@@ -1,0 +1,52 @@
+{
+  "image": "img/GEN.png",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string",
+      "label": "Step name"
+    },
+    {
+      "name": "limit",
+      "type": "number",
+      "label": "Limit"
+    },
+    {
+      "name": "neverEnding",
+      "type": "boolean",
+      "label": "Never stop generating rows"
+    },
+    {
+      "name": "intervalInMs",
+      "type": "number",
+      "label": "Interval in ms (delay)"
+    },
+    {
+      "name": "rowTimeField",
+      "type": "string",
+      "label": "Current row time field name"
+    },
+    {
+      "name": "lastTimeField",
+      "type": "string",
+      "label": "Previous row time field name"
+    },
+    {
+      "name": "fields",
+      "type": "fields",
+      "label": "Fields",
+      "fields": [
+        { "name": "name", "type": "string", "label": "Name" },
+        { "name": "type", "type": "type", "label": "Type" },
+        { "name": "format", "type": "string", "label": "Format" },
+        { "name": "length", "type": "number", "label": "Length" },
+        { "name": "precision", "type": "string", "label": "Precision" },
+        { "name": "currency", "type": "string", "label": "Currency" },
+        { "name": "decimal", "type": "string", "label": "Decimal" },
+        { "name": "group", "type": "string", "label": "Group" },
+        { "name": "value", "type": "string", "label": "Value" },
+        { "name": "setEmptyString", "type": "string", "label": "Set empty string" }
+      ]
+    }
+  ]
+}

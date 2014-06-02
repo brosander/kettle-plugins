@@ -1,0 +1,40 @@
+<div class="designToolbar">
+  <div class="designToolbarItem">
+    <img src="img/run.png"/>
+  </div>
+  <div class="designToolbarItem">
+    <img src="img/pause.png"/>
+  </div>
+  <div class="designToolbarItem">
+    <img src="img/stop.png"/>
+  </div>
+  <div class="designToolbarItem">
+    <img src="img/preview.png"/>
+  </div>
+  <div class="designToolbarItem">
+    <img src="img/debug.png"/>
+  </div>
+  <div class="designToolbarItem">
+    <img src="img/replay.png"/>
+  </div>
+  <div class="designToolbarItem">
+    <img src="img/check.png"/>
+  </div>
+  <div class="designToolbarItem">
+    <img src="img/impact.png"/>
+  </div>
+  <div class="designToolbarItem">
+    <img src="img/SQLbutton.png"/>
+  </div>
+  <div class="designToolbarItem">
+    <img src="img/exploredb.png"/>
+  </div>
+  <div class="designToolbarItem">
+    <img src="img/show-results.png"/>
+    <!-- <img src="img/hide-results.png"/> -->
+  </div>
+  <input ng-model="zoomPercent" list="zoomOptions" ng-change="setZoom(zoomPercent)";/>
+  <datalist id="zoomOptions">
+    <option ng-repeat="num in [200,150,100,75,50,25]" value="{{num}}%"/>
+  </datalist>
+</div>

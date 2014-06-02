@@ -1,0 +1,35 @@
+{ 
+  "steps": [
+  {
+    "name": "Generate Rows",
+    "type": "RowGenerator",
+    "location": { "x": 50, "y": 50 },
+    "limit": 100000000000000000,
+    "intervalInMs": 5000,
+    "rowTimeField": "now",
+    "lastTimeField": "FiveSecondsAgo",
+    "fields": [
+      { "name": "a", "type": "String", "setEmptyString": "Y", "value": "a" },
+      { "name": "b", "type": "Binary", "setEmptyString": "N", "value": "1" },
+      { "name": "c", "type": "Number", "setEmptyString": "N", "value": "3" },
+      { "name": "d", "type": "Internet Address", "setEmptyString": "N", "value": "192.168.255.5" },
+      { "name": "e", "type": "Boolean", "setEmptyString": "N", "value": "Y" },
+      { "name": "f", "type": "Integer", "setEmptyString": "N", "value": "3" }
+    ]
+  },
+  {
+    "name": "Select values",
+    "type": "SelectValues",
+    "location": { "x": 191, "y": 54 }
+  },
+  {
+    "name": "Text file output",
+    "type": "TextFileOutput",
+    "location": { "x": 298, "y": 58 }
+  }
+  ],
+  "hops": [
+    { "from": "Generate Rows", "to": "Select values" },
+    { "from": "Select values", "to": "Text file output" }
+  ]
+}

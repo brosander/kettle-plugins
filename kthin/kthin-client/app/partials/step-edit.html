@@ -1,0 +1,16 @@
+<div kthin-dialog title="Editing: {{step.name}}" okonclick="save(step)" cancelonclick="cancel(step)">
+  <div ng-repeat="field in step.definition.fields" ng-attr-class="field{{field.name.substring(0,1).toUpperCase() + field.name.substring(1)}}" ng-switch on="field.type">
+    <div ng-switch-when="string" class="formRow">
+      <div class="formLabel formCol2">{{field.label}}:</div><input class="formInput formCol2" ng-model="step[field.name]"/>
+    </div>
+    <div ng-switch-when="number" class="formRow">
+      <div class="formLabel formCol2">{{field.label}}:</div><input type="number" class="formInput formCol2" ng-model="step[field.name]"/>
+    </div>
+    <div ng-switch-when="boolean" class="formRow">
+      <div class="formLabel formCol2">{{field.label}}:</div><div class="formCol2"><input type="checkbox" class="formInput" ng-model="step[field.name]"/></div>
+    </div>
+    <div ng-switch-when="fields" class="formRow">
+      <div class="formHeader">{{field.label}}:</div><div class="formColFull"><ng-include src="'partials/fields-edit.html'" /></div>
+    </div>
+  </div>
+</div>

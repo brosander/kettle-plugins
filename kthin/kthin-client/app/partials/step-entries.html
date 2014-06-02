@@ -1,0 +1,20 @@
+<div>Search: <input ng-model="query" ng-change="expandAllCategories(query.length > 0)"/></div>
+<div ng-repeat="category in stepList">
+  <!-- expanded category header -->
+  <div ng-show="(filteredSteps = (category.steps | filter: query)).length > 0 && category.expanded">
+    <img src="img/minus.png" ng-click="category.expanded = false"/><img class="entriesImage" src="img/folder.png"/>{{category.category}}
+  </div>
+  <!-- non-expanded category that has some steps atching query -->
+  <div ng-show="filteredSteps.length > 0 && !category.expanded">
+    <img src="img/plus.png" ng-click="category.expanded = true"/><img class="entriesImage" src="img/folder.png"/>{{category.category}}
+  </div>
+  <!-- category with no steps matching query -->
+  <div ng-show="filteredSteps.length == 0">
+    <div class="entriesImage"/><img class="entriesImage" src="img/folder.png"/>{{category.category}}
+  </div>
+  <div ng-show="category.expanded">
+    <div kthin-draggable kthin-var="stepType" class="stepType" ng-repeat="stepType in filteredSteps">
+      <div class="entriesImage"/><img class="entriesImage" ng-attr-src="{{stepType.image}}"/>{{stepType.label}}
+    </div>
+  </div>
+</div>

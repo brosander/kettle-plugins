@@ -1,0 +1,8 @@
+<div class="menuItem" ng-class="{menuItemSelected: menu.top && menu.expanded, nestedMenuItem: !menu.top}" ng-click="menuClick(menu, $event)">
+  {{menu.name}}<span ng-show="!menu.top && menu.submenus && !menu.expanded"> [+] </span><span ng-show="!menu.top && menu.submenus && menu.expanded"> [-] </span>
+</div>
+<div ng-show="menu.expanded" ng-class="{false: 'menuContainer', true: 'menuContainerTop'}[!!menu.top]" ng-class="{menuContainerTop: menu.top}">
+  <div ng-repeat="menu in menu.submenus">
+    <ng-include src="'partials/menu-item.html'"/>
+  </div>
+</div>

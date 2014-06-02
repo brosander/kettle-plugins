@@ -1,0 +1,34 @@
+<div id="toolbar">
+  <div ng-repeat="menu in menus" class="menuCategory">
+    <ng-include src="'partials/menu-item.html'"/>
+  </div>
+</div>
+<div id="transDesign">
+  <div id="stepEntries">
+    <ng-include src="'partials/step-entries.html'" />
+  </div>
+  <div id="designView" ng-show="activeEditor">
+    <div id="tabBar">
+      <div ng-repeat="editor in editors" ng-class="{selectedEditorTab: editor == activeEditor, editorTab: editor != activeEditor}" ng-click="setActiveEditor(editor)">
+        {{editor.name}}
+      </div>
+    </div>
+    <div id="designToolBar">
+      <ng-include src="'partials/design-toolbar.html'"/>
+    </div>
+    <div id="palette">
+      <svg kthin-droppable dropHelper="onStepTypeDrop">
+        <line ng-repeat="hop in activeEditor.hops | filter : {_defined: true}" ng-attr-x1="{{getMiddleX(hop.from)}}" ng-attr-y1="{{getMiddleY(hop.from)}}" ng-attr-x2="{{getMiddleX(hop.to)}}" ng-attr-y2="{{getMiddleY(hop.to)}}" class="hop" />
+        <!--  <polygon ng-repeat-end ng-attr-points="{{}} />-->
+        <image ng-repeat-start="step in activeEditor.steps | filter: {_defined: true}" ng-xlink-href="{{step.definition.image}}" ng-attr-x="{{step.location.x}}" ng-attr-y="{{step.location.y}}" ng-attr-height="{{step.height}}px" ng-attr-width="{{step.width}}px" xlink:href="" />
+        <rect ng-attr-x="{{step.location.x - 1}}" ng-attr-y="{{step.location.y - 1}}" ng-attr-width="{{step.width + 2}}px" ng-attr-height="{{step.height + 2}}px" ng-mousedown="stepOnMouseDown($event, step);" ng-dblclick="stepOnDoubleClick($event, step)" class="border">
+          <title>{{step.name}}</title>
+        </rect>
+        <text ng-repeat-end ng-attr-x="{{getMiddleX(step)}}" ng-attr-y="{{step.location.y + step.height + 18}}" text-anchor="middle" class="unselectable">{{step.name}}</text>
+      </svg>
+    </div>
+  </div>
+</div>
+<div ng-repeat="(kthinId, stepEntry) in editingEntries | filter:{editing: true}" ng-init="step = stepEntry.stepCopy">
+  <ng-include src="'partials/step-edit.html'" />
+</div>

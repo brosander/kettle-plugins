@@ -1,0 +1,10 @@
+<table>
+  <tr>
+    <td>#</td>
+    <td ng-repeat="fieldDef in field.fields">{{fieldDef.label}}</td>
+  </tr>
+  <tr ng-repeat="stepField in step.fields">
+    <td>{{$index + 1}}</td>
+    <td ng-repeat="fieldDef in field.fields">{{stepField[fieldDef.name]}}</td>
+  </tr>
+</table>
