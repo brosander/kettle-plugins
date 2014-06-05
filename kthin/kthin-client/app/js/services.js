@@ -24,3 +24,10 @@ kettleServices.factory('StepList', ['$resource',
       query: {method:'GET', isArray: true}
     });
   }]);
+
+kettleServices.factory('JobEntryList', ['$resource',
+  function($resource){
+    return $resource('kettle/kthin/jobEntryList', {}, {
+      query: {method:'GET', isArray: true}
+    });
+  }]);
