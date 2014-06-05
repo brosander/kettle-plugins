@@ -21,13 +21,18 @@ if __name__ == '__main__':
     request.add_header('Authorization', 'Basic %s' %auth)
     result = urllib2.urlopen(request)
     return result.read()
-  categories = json.loads(getData('kettle/kthin/stepList/'))
-  for category in categories:
-    for step in category['steps']:
-      data = getData('kettle/kthin/stepImage/?name=%s' % (step['name']))
-      stepPath = 'img/steps/' + step['name'] + '.png'
-      step['image'] = stepPath
-      with open(args.destination + '/' + stepPath, 'wb') as f:
-        f.write(data)
-  with open(args.destination + '/kettle/kthin/stepList', 'w') as f:
-    f.write(json.dumps(categories))
+
+  def getListAndImages(listUrl, listFile, entryName):
+    categories = json.loads(getData(listUrl))
+    for category in categories:
+      for entry in category[entryName]:
+        print 'Getting image for ' + entry['name']
+        data = getData(entry['image'])
+        entryPath = 'img/' + entryName + '/' + entry['name'] + '.png'
+        entry['image'] = entryPath
+        with open(args.destination + '/' + entryPath, 'wb') as f:
+          f.write(data)
+    with open(args.destination + listFile, 'w') as f:
+      f.write(json.dumps(categories))
+  getListAndImages('kettle/kthin/stepList/', '/kettle/kthin/stepList', 'steps')
+  getListAndImages('kettle/kthin/jobEntryList/', '/kettle/kthin/jobEntryList', 'jobEntries')
