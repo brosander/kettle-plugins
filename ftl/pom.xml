@@ -47,9 +47,15 @@
             <url>http://repository.pentaho.org/artifactory/pentaho</url>
         </repository>
         <repository>
-            <id>repo.pentaho.org.public.aggregate</id>
-            <name>repo.pentaho.org.public.aggregate</name>
-            <url>http://repository.pentaho.org/artifactory/public-aggregate</url>
+          <id>pentaho</id>
+          <name>Pentaho Artifactory Default Aggregate [internal]</name>
+          <url>http://repo.pentaho.org/artifactory/repo/</url>
+          <releases>
+            <updatePolicy>default</updatePolicy>
+          </releases>
+          <snapshots>
+            <updatePolicy>always</updatePolicy>
+          </snapshots>
         </repository>
     </repositories>
 
