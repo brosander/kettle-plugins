@@ -29,14 +29,26 @@ import java.util.List;
 public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     private static final Class<?> PKG = FTLMeta.class;
 
-    private String outputIDFieldName = null;
+    public static final String OUTPUT_ID_FIELD_NAME_FIELD = "outputIDFieldName";
+    public static final String TEMPLATE_STRING_FIELD = "templateString";
+    public static final String TEMPLATE_FILE_FIELD = "templateFile";
+    public static final String USE_TEMPLATE_FILE_FIELD = "useTemplateFile";
+    public static final String TEMPLATE_FILE_ENCODING_FIELD = "templateFileEncoding";
+
+    private String outputIDFieldName = "ftl.output";
     private String templateString = "";
+    private String templateFile = "";
+    private boolean useTemplateFile = false;
+    private String templateFileEncoding = "UTF-8";
 
     public String getOutputIDFieldName() {
         return outputIDFieldName;
     }
 
     public void setOutputIDFieldName(String outputIDFieldName) {
+        if (!this.outputIDFieldName.equals(outputIDFieldName)) {
+            setChanged();
+        }
         this.outputIDFieldName = outputIDFieldName;
     }
 
@@ -44,14 +56,53 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
         return templateString;
     }
 
-    public void setTemplateString(String templateString) {
+    public void setTemplateString(String templateString){
+        if (!this.templateString.equals(templateString)) {
+            setChanged();
+        }
         this.templateString = templateString;
+    }
+
+    public String getTemplateFile() {
+        return templateFile;
+    }
+
+    public void setTemplateFile(String templateFile) {
+        if (!this.templateFile.equals(templateFile)) {
+            setChanged();
+        }
+        this.templateFile = templateFile;
+    }
+
+    public boolean isUseTemplateFile() {
+        return useTemplateFile;
+    }
+
+    public String getTemplateFileEncoding() {
+        return templateFileEncoding;
+    }
+
+    public void setTemplateFileEncoding(String templateFileEncoding) {
+        if (!this.templateFileEncoding.equals(templateFileEncoding)) {
+            setChanged();
+        }
+        this.templateFileEncoding = templateFileEncoding;
+    }
+
+    public void setUseTemplateFile(boolean useTemplateFile) {
+        if (this.useTemplateFile != useTemplateFile) {
+            setChanged();
+        }
+        this.useTemplateFile = useTemplateFile;
     }
 
     @Override
     public void setDefault() {
         outputIDFieldName = "ftl.output";
         templateString = "";
+        templateFile = "";
+        useTemplateFile = false;
+        templateFileEncoding = "UTF-8";
     }
 
     @Override
@@ -91,26 +142,38 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     @Override
     public String getXML() throws KettleException {
         StringBuilder retval = new StringBuilder();
-        retval.append("    ").append(XMLHandler.addTagValue("outputIDFieldName", outputIDFieldName));
-        retval.append("    ").append(XMLHandler.addTagValue("templateString", templateString));
+        retval.append("    ").append(XMLHandler.addTagValue(OUTPUT_ID_FIELD_NAME_FIELD, outputIDFieldName));
+        retval.append("    ").append(XMLHandler.addTagValue(TEMPLATE_STRING_FIELD, templateString));
+        retval.append("    ").append(XMLHandler.addTagValue(TEMPLATE_FILE_FIELD, templateFile));
+        retval.append("    ").append(XMLHandler.addTagValue(USE_TEMPLATE_FILE_FIELD, useTemplateFile));
+        retval.append("    ").append(XMLHandler.addTagValue(TEMPLATE_FILE_ENCODING_FIELD, templateFileEncoding));
         return retval.toString();
     }
 
     @Override
     public void loadXML(Node stepnode, List<DatabaseMeta> databases, IMetaStore metaStore) throws KettleXMLException {
-        outputIDFieldName = XMLHandler.getTagValue( stepnode, "outputIDFieldName" );
-        templateString = XMLHandler.getTagValue( stepnode, "templateString" );
+        outputIDFieldName = XMLHandler.getTagValue( stepnode, OUTPUT_ID_FIELD_NAME_FIELD);
+        templateString = XMLHandler.getTagValue( stepnode, TEMPLATE_STRING_FIELD);
+        templateFile = XMLHandler.getTagValue( stepnode, TEMPLATE_FILE_FIELD);
+        useTemplateFile = "Y".equalsIgnoreCase(XMLHandler.getTagValue( stepnode, USE_TEMPLATE_FILE_FIELD));
+        templateFileEncoding = XMLHandler.getTagValue( stepnode, TEMPLATE_FILE_ENCODING_FIELD);
     }
 
     @Override
     public void saveRep(Repository rep, IMetaStore metaStore, ObjectId id_transformation, ObjectId id_step) throws KettleException {
-        rep.saveStepAttribute( id_transformation, id_step, "outputIDFieldName", outputIDFieldName);
-        rep.saveStepAttribute( id_transformation, id_step, "templateString", templateString);
+        rep.saveStepAttribute( id_transformation, id_step, OUTPUT_ID_FIELD_NAME_FIELD, outputIDFieldName);
+        rep.saveStepAttribute( id_transformation, id_step, TEMPLATE_STRING_FIELD, templateString);
+        rep.saveStepAttribute( id_transformation, id_step, TEMPLATE_FILE_FIELD, templateFile);
+        rep.saveStepAttribute( id_transformation, id_step, USE_TEMPLATE_FILE_FIELD, useTemplateFile);
+        rep.saveStepAttribute( id_transformation, id_step, TEMPLATE_FILE_ENCODING_FIELD, templateFileEncoding);
     }
 
     @Override
     public void readRep(Repository rep, IMetaStore metaStore, ObjectId id_step, List<DatabaseMeta> databases) throws KettleException {
-        outputIDFieldName = rep.getStepAttributeString( id_step, "outputIDFieldName");
-        templateString = rep.getStepAttributeString( id_step, "templateString");
+        outputIDFieldName = rep.getStepAttributeString( id_step, OUTPUT_ID_FIELD_NAME_FIELD);
+        templateString = rep.getStepAttributeString( id_step, TEMPLATE_STRING_FIELD);
+        templateFile = rep.getStepAttributeString( id_step, TEMPLATE_FILE_FIELD);
+        useTemplateFile = rep.getStepAttributeBoolean( id_step, USE_TEMPLATE_FILE_FIELD);
+        templateFileEncoding = rep.getStepAttributeString( id_step, TEMPLATE_FILE_ENCODING_FIELD);
     }
 }

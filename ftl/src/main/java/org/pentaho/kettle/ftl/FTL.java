@@ -1,5 +1,6 @@
 package org.pentaho.kettle.ftl;
 
+import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import org.pentaho.di.core.exception.KettleException;
@@ -42,7 +43,12 @@ public class FTL extends BaseStep implements StepInterface {
             final Configuration config = new Configuration();
             final StringTemplateLoader templateLoader = new StringTemplateLoader();
             config.setTemplateLoader(templateLoader);
-            templateLoader.putTemplate("template", meta.getTemplateString());
+            if (meta.isUseTemplateFile()) {
+                String template = KettleVFS.getTextFileContent(environmentSubstitute(meta.getTemplateFile()), environmentSubstitute(meta.getTemplateFileEncoding()));
+                templateLoader.putTemplate("template", template);
+            } else {
+                templateLoader.putTemplate("template", meta.getTemplateString());
+            }
 
             try {
                 data.setTemplate(config.getTemplate("template"));
@@ -58,6 +64,11 @@ public class FTL extends BaseStep implements StepInterface {
         }
 
         Map<String, Object> templateMap = new HashMap<String, Object>();
+
+        for (String variable : listVariables()) {
+            templateMap.put(variable, getVariable(variable));
+        }
+
         for (int i = 0; i < inputRowMeta.size(); i++) {
             templateMap.put(inputRowMeta.getValueMeta(i).getName(), inputRow[i]);
         }

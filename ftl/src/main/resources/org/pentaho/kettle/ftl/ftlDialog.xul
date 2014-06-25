@@ -11,14 +11,42 @@
         ondialogcancel="handler.onCancel()"
         height="600" width="800"
         appicon="ui/images/spoon.ico">
-    <hbox id="step-name-box">
-        <label value="${FTL.StepName.Label}" />
-        <textbox id="step-name" flex="1" multiline="false"/>
-    </hbox>
-    <vbox id="template-string-box" flex="1">
-        <label value="${FTL.TemplateString.Label}" />
-        <textbox id="template-string" flex="1" multiline="true"/>
-    </vbox>
+    <grid id="settings-grid">
+        <columns>
+            <column/>
+            <column flex="1"/>
+        </columns>
+        <rows>
+            <row>
+                <label value="${FTL.StepName.Label}" align="end" />
+                <hbox flex="1">
+                    <textbox id="step-name" flex="1" multiline="false"/>
+                </hbox>
+            </row>
+            <row>
+                <label value="${FTL.TemplateFile.Label}" align="end"/>
+                <hbox flex="1">
+                    <textbox id="template-file" flex="1" />
+                    <button id="template-file-browse" label="${FTL.TemplateFile.Browse.Label}" onclick="handler.selectTemplateFile()"/>
+                </hbox>
+            </row>
+            <row>
+                <label value="${FTL.UseTemplateFile.Label}" align="end"/>
+                <checkbox id="template-usefile-checkbox"/>
+            </row>
+            <row>
+                <label value="${FTL.TemplateFileEncoding.Label}" align="end" />
+                <hbox flex="1">
+                    <textbox id="template-file-encoding" flex="1" multiline="false"/>
+                </hbox>
+            </row>
+            <row>
+                <label value="${FTL.TemplateString.Label}" align="end" />
+                <hbox/>
+            </row>
+        </rows>
+    </grid>
+    <textbox id="template-string" flex="1" multiline="true"/>
     <vbox>
         <hbox id="output-field-box">
             <label value="${FTL.OutputField.Label}" />
@@ -27,12 +55,12 @@
     </vbox>
     <tabbox>
         <tabs id="tabs">
-            <tab label="${FTL.fields}"/>
+            <tab label="${FTL.fields}" flex="1"/>
         </tabs>
         <tabpanels>
             <tabpanel>
                 <vbox>
-                    <tree flex="1" editable="false" seltype="cell" height="150"
+                    <tree editable="false" seltype="cell" height="150"
                           enableColumnDrag="true" id="fieldsTable" autocreatenewrows="true">
                         <treecols id="column_list">
                             <treecol id="name_col" label="${FTL.column-name}" pen:binding="name" editable="false" />
