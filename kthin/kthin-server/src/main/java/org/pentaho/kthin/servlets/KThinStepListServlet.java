@@ -25,7 +25,7 @@ import java.util.Map;
  */
 @org.pentaho.di.core.annotations.CarteServlet(id = "org.pentaho.kthin.servlets.KThinStepListServlet", name = "org.pentaho.kthin.servlets.KThinStepListServlet", description = "Servlet to generate step list json", i18nPackageName = "org.pentaho.kthin.servlets")
 public class KThinStepListServlet extends HttpServlet implements CartePluginInterface {
-    public static final String  CONTEXT_PATH    = "/kettle/kthin/stepList";
+    public static final String  CONTEXT_PATH    = "/kettle/kthin/entryList";
     private boolean jettyMode = false;
 
     @Override
@@ -68,6 +68,7 @@ public class KThinStepListServlet extends HttpServlet implements CartePluginInte
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
+        final String entryType = req.getParameter("entryType");
         final PluginRegistry registry = PluginRegistry.getInstance();
         final List<PluginInterface> basesteps = registry.getPlugins(StepPluginType.class);
         final List<String> basecat = registry.getCategories(StepPluginType.class);

@@ -4,8 +4,8 @@
 
 var kettleControllers = angular.module('kettleControllers', []);
 
-kettleControllers.controller('KettleController', ['$scope', 'Transformation', 'Step', 'StepList', 'JobEntryList',
-  function($scope, Transformation, Step, StepList, JobEntryList) {
+kettleControllers.controller('KettleController', ['$scope', 'Transformation', 'Step', 'EntryList',
+  function($scope, Transformation, Step, EntryList) {
     $scope.fileOpen = function() {
       $scope.openTransformation("test1")
     };
@@ -73,8 +73,7 @@ kettleControllers.controller('KettleController', ['$scope', 'Transformation', 'S
     $(document).click($scope.documentClick);
 
     $scope.sequence = 0;
-    $scope.stepList = StepList.query();
-    $scope.jobEntryList = JobEntryList.query();
+    $scope.entryList = EntryList.query({entryType: "step"});
     $scope.editors = [];
     $scope.editingEntries = {};
     $scope.zoomPercent = "100%";

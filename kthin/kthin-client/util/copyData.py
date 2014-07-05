@@ -34,5 +34,5 @@ if __name__ == '__main__':
           f.write(data)
     with open(args.destination + listFile, 'w') as f:
       f.write(json.dumps(categories))
-  getListAndImages('kettle/kthin/stepList/', '/kettle/kthin/stepList', 'steps')
-  getListAndImages('kettle/kthin/jobEntryList/', '/kettle/kthin/jobEntryList', 'jobEntries')
+  getListAndImages('kettle/kthin/stepList/', '/kettle/kthin/list/step', 'steps')
+  getListAndImages('kettle/kthin/jobEntryList/', '/kettle/kthin/list/jobEntry', 'jobEntries')

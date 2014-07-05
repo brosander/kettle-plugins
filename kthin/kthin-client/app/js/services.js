@@ -18,16 +18,9 @@ kettleServices.factory('Step', ['$resource',
     });
   }]);
 
-kettleServices.factory('StepList', ['$resource',
+kettleServices.factory('EntryList', ['$resource',
   function($resource){
-    return $resource('kettle/kthin/stepList', {}, {
-      query: {method:'GET', isArray: true}
-    });
-  }]);
-
-kettleServices.factory('JobEntryList', ['$resource',
-  function($resource){
-    return $resource('kettle/kthin/jobEntryList', {}, {
-      query: {method:'GET', isArray: true}
+    return $resource('kettle/kthin/list/:entryType', {}, {
+      query: {method:'GET', params:{entryType : 'entryType'}, isArray: true}
     });
   }]);
