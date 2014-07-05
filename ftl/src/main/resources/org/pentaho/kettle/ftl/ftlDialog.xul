@@ -27,6 +27,7 @@
                 <label value="${FTL.TemplateFile.Label}" align="end"/>
                 <hbox flex="1">
                     <textbox id="template-file" flex="1" />
+                    <image src="${Variable_image}" />
                     <button id="template-file-browse" label="${FTL.TemplateFile.Browse.Label}" onclick="handler.selectTemplateFile()"/>
                 </hbox>
             </row>
@@ -38,6 +39,7 @@
                 <label value="${FTL.TemplateFileEncoding.Label}" align="end" />
                 <hbox flex="1">
                     <textbox id="template-file-encoding" flex="1" multiline="false"/>
+                    <image src="${Variable_image}" />
                 </hbox>
             </row>
             <row>
@@ -51,6 +53,7 @@
         <hbox id="output-field-box">
             <label value="${FTL.OutputField.Label}" />
             <textbox id="output-field" flex="1" multiline="false"/>
+            <image src="${Variable_image}" />
         </hbox>
     </vbox>
     <tabbox>
