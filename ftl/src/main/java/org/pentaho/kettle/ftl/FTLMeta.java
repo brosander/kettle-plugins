@@ -46,7 +46,8 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     }
 
     public void setOutputIDFieldName(String outputIDFieldName) {
-        if (!this.outputIDFieldName.equals(outputIDFieldName)) {
+        if (this.outputIDFieldName != null &&
+            !this.outputIDFieldName.equals(outputIDFieldName)) {
             setChanged();
         }
         this.outputIDFieldName = outputIDFieldName;
@@ -57,7 +58,8 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     }
 
     public void setTemplateString(String templateString){
-        if (!this.templateString.equals(templateString)) {
+        if (this.templateString != null &&
+            !this.templateString.equals(templateString)) {
             setChanged();
         }
         this.templateString = templateString;
@@ -68,7 +70,7 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     }
 
     public void setTemplateFile(String templateFile) {
-        if (!this.templateFile.equals(templateFile)) {
+        if ( this.templateFile != null && !this.templateFile.equals(templateFile)) {
             setChanged();
         }
         this.templateFile = templateFile;
@@ -83,7 +85,8 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     }
 
     public void setTemplateFileEncoding(String templateFileEncoding) {
-        if (!this.templateFileEncoding.equals(templateFileEncoding)) {
+        if (this.templateFileEncoding != null &&
+            !this.templateFileEncoding.equals(templateFileEncoding)) {
             setChanged();
         }
         this.templateFileEncoding = templateFileEncoding;
