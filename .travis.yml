@@ -1,0 +1,4 @@
+language: java
+env:
+  - TEST_DIR=ftl
+script: cd $TEST_DIR && mvn test
