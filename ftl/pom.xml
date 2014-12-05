@@ -9,20 +9,20 @@
     <version>0.1.2-SNAPSHOT</version>
 
     <parent>
-      <groupId>org.pentaho</groupId>
-      <artifactId>pentaho-ce-jar-parent-pom</artifactId>
-      <version>1.0.1</version>
+        <groupId>org.pentaho</groupId>
+        <artifactId>pentaho-ce-jar-parent-pom</artifactId>
+        <version>1.0.1</version>
     </parent>
 
     <properties>
-      <pentaho-kettle.version>TRUNK-SNAPSHOT</pentaho-kettle.version>
+        <pentaho-kettle.version>TRUNK-SNAPSHOT</pentaho-kettle.version>
     </properties>
 
     <scm>
-      <connection>scm:git:git@github.com:${github.user}/${project.artifactId}.git</connection>
-      <url>scm:git:git@github.com:${github.user}/${project.artifactId}.git</url>
-      <developerConnection>scm:git:git@github.com:${github.user}/${project.artifactId}.git</developerConnection>
-      <tag>HEAD</tag>
+        <connection>scm:git:git@github.com:${github.user}/${project.artifactId}.git</connection>
+        <url>scm:git:git@github.com:${github.user}/${project.artifactId}.git</url>
+        <developerConnection>scm:git:git@github.com:${github.user}/${project.artifactId}.git</developerConnection>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
@@ -37,6 +37,12 @@
             <artifactId>kettle-engine</artifactId>
             <version>${pentaho-kettle.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>pentaho-kettle</groupId>
+            <artifactId>kettle-engine-test</artifactId>
+            <version>${pentaho-kettle.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>pentaho-kettle</groupId>
@@ -58,33 +64,20 @@
     </dependencies>
 
     <repositories>
-    <repository>
-      <id>pentaho.resolve.repo</id>
-      <name>Pentaho Group Resolve Repository</name>
-      <url>http://nexus.pentaho.org/content/groups/omni/</url>
-      <releases>
-        <updatePolicy>always</updatePolicy>
-        <checksumPolicy>fail</checksumPolicy>
-      </releases>
-      <snapshots>
-        <updatePolicy>always</updatePolicy>
-        <checksumPolicy>fail</checksumPolicy>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>old.pentaho.resolve.repo</id>
-      <name>Old (Artifactory) Pentaho Group Resolve Repository</name>
-      <url>http://repo.pentaho.org/artifactory/repo/</url>
-      <releases>
-        <updatePolicy>always</updatePolicy>
-        <checksumPolicy>fail</checksumPolicy>
-      </releases>
-      <snapshots>
-        <updatePolicy>always</updatePolicy>
-        <checksumPolicy>fail</checksumPolicy>
-      </snapshots>
-    </repository>
-  </repositories>
+        <repository>
+            <id>pentaho.resolve.repo</id>
+            <name>Pentaho Group Resolve Repository</name>
+            <url>http://nexus.pentaho.org/content/groups/omni/</url>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
