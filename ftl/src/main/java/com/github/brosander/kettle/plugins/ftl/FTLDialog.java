@@ -1,18 +1,15 @@
-package org.pentaho.kettle.ftl;
+package com.github.brosander.kettle.plugins.ftl;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.pentaho.di.core.Const;
-import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.BaseStepMeta;
 import org.pentaho.di.ui.trans.step.BaseStepXulDialog;
-import org.pentaho.ui.xul.XulException;
 import org.pentaho.ui.xul.binding.Binding;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +29,7 @@ public class FTLDialog extends BaseStepXulDialog {
     private String templateFileEncoding = "";
 
     public FTLDialog( Shell parent, Object in, TransMeta tr, String sname ) {
-        super("org/pentaho/kettle/ftl/ftlDialog.xul", parent, (BaseStepMeta) in, tr, sname);
+        super("com/github/brosander/kettle/plugins/ftl/ftlDialog.xul", parent, (BaseStepMeta) in, tr, sname);
         loadMeta((FTLMeta) baseStepMeta);
         stepname = sname;
         tempStepName = sname;

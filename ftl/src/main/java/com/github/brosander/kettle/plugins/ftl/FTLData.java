@@ -1,4 +1,4 @@
-package org.pentaho.kettle.ftl;
+package com.github.brosander.kettle.plugins.ftl;
 
 import freemarker.template.Template;
 import org.pentaho.di.core.row.RowMetaInterface;

@@ -1,4 +1,4 @@
-package org.pentaho.kettle.ftl;
+package com.github.brosander.kettle.plugins.ftl;
 
 import org.pentaho.di.core.annotations.Step;
 import org.pentaho.di.core.database.DatabaseMeta;
@@ -25,7 +25,7 @@ import java.util.List;
  * Created by bryan on 2/1/14.
  */
 
-@Step(id = "FTL", image = "FTL.png", i18nPackageName = "org.pentaho.kettle.ftl", name = "FTL.TransName", description = "FTL.TransDescription", categoryDescription = "FTL.CategoryDescription")
+@Step(id = "FTL", image = "FTL.png", i18nPackageName = "org.brosander.kettle.plugins.ftl", name = "FTL.TransName", description = "FTL.TransDescription", categoryDescription = "FTL.CategoryDescription")
 public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     private static final Class<?> PKG = FTLMeta.class;
 

@@ -97,30 +97,6 @@
   <hop> <from>Data Grid</from><to>FreeMarker Template</to><enabled>Y</enabled> </hop>
   </order>
   <step>
-    <name>FreeMarker Template</name>
-    <type>FTL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <outputIDFieldName>ftl.output</outputIDFieldName>
-    <templateString>		&#xa;	&#xa;&#x3c;html&#x3e;&#xa;&#x3c;head&#x3e;&#xa;  &#x3c;title&#x3e;Welcome&#x21;&#x3c;&#x2f;title&#x3e;&#xa;&#x3c;&#x2f;head&#x3e;&#xa;&#x3c;body&#x3e;&#xa;  &#x3c;h1&#x3e;&#xa;    Welcome &#x24;&#x7b;user&#x7d;&#x3c;&#x23;if user &#x3d;&#x3d; &#x22;Big Joe&#x22;&#x3e;, our beloved leader&#x3c;&#x2f;&#x23;if&#x3e;&#x21;&#xa;  &#x3c;&#x2f;h1&#x3e;&#xa;  &#x3c;p&#x3e;Our latest product&#x3a;&#xa;  &#x3c;a href&#x3d;&#x22;&#x24;&#x7b;latestProductUrl&#x7d;&#x22;&#x3e;&#x24;&#x7b;latestProductName&#x7d;&#x3c;&#x2f;a&#x3e;&#x21;&#xa;&#x3c;&#x2f;body&#x3e;&#xa;&#x3c;&#x2f;html&#x3e;  </templateString>
-    <templateFile/>
-    <useTemplateFile>N</useTemplateFile>
-    <templateFileEncoding>UTF-8</templateFileEncoding>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>443</xloc>
-      <yloc>198</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Data Grid</name>
     <type>DataGrid</type>
     <description/>
@@ -174,6 +150,30 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>260</xloc>
       <yloc>199</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>FreeMarker Template</name>
+    <type>FTL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <outputIDFieldName>ftl.output</outputIDFieldName>
+    <templateString>&#x3c;html&#x3e;&#xa;&#x3c;head&#x3e;&#xa;  &#x3c;title&#x3e;Welcome&#x21;&#x3c;&#x2f;title&#x3e;&#xa;&#x3c;&#x2f;head&#x3e;&#xa;&#x3c;body&#x3e;&#xa;  &#x3c;h1&#x3e;&#xa;    Welcome &#x24;&#x7b;user&#x7d;&#x3c;&#x23;if user &#x3d;&#x3d; &#x22;Big Joe&#x22;&#x3e;, our beloved leader&#x3c;&#x2f;&#x23;if&#x3e;&#x21;&#xa;  &#x3c;&#x2f;h1&#x3e;&#xa;  &#x3c;p&#x3e;Our latest product&#x3a;&#xa;  &#x3c;a href&#x3d;&#x22;&#x24;&#x7b;latestProductUrl&#x7d;&#x22;&#x3e;&#x24;&#x7b;latestProductName&#x7d;&#x3c;&#x2f;a&#x3e;&#x21;&#xa;&#x3c;&#x2f;body&#x3e;&#xa;&#x3c;&#x2f;html&#x3e;  </templateString>
+    <templateFile/>
+    <useTemplateFile>N</useTemplateFile>
+    <templateFileEncoding>UTF-8</templateFileEncoding>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>443</xloc>
+      <yloc>198</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

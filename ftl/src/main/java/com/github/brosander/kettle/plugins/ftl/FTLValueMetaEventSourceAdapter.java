@@ -1,4 +1,4 @@
-package org.pentaho.kettle.ftl;
+package com.github.brosander.kettle.plugins.ftl;
 
 import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.ui.xul.XulEventSourceAdapter;

@@ -1,6 +1,5 @@
-package org.pentaho.kettle.ftl;
+package com.github.brosander.kettle.plugins.ftl;
 
-import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import org.pentaho.di.core.exception.KettleException;
@@ -9,7 +8,11 @@ import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.vfs.KettleVFS;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
-import org.pentaho.di.trans.step.*;
+import org.pentaho.di.trans.step.BaseStep;
+import org.pentaho.di.trans.step.StepDataInterface;
+import org.pentaho.di.trans.step.StepInterface;
+import org.pentaho.di.trans.step.StepMeta;
+import org.pentaho.di.trans.step.StepMetaInterface;
 
 import java.io.IOException;
 import java.io.StringWriter;
