@@ -41,9 +41,13 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     public static final String USE_TEMPLATE_FILE_FIELD = "useTemplateFile";
     public static final String TEMPLATE_FILE_ENCODING_FIELD = "templateFileEncoding";
 
-    private String outputIDFieldName = "ftl.output";
-    private String firstVariableName = "ftl.isFirstRow";
-    private String lastVariableName = "ftl.isLastRow";
+    public static final String OUTPUT_ID_FIELD_NAME_DEFAULT = "ftlOutput";
+    public static final String FIRST_VARIABLE_NAME_DEFAULT = "ftlFirstRow";
+    public static final String LAST_VARIABLE_NAME_DEFAULT = "ftlLastRow";
+
+    private String outputIDFieldName = OUTPUT_ID_FIELD_NAME_DEFAULT;
+    private String firstVariableName = FIRST_VARIABLE_NAME_DEFAULT;
+    private String lastVariableName = LAST_VARIABLE_NAME_DEFAULT;
     private String templateString = "";
     private String templateFile = "";
     private boolean useTemplateFile = false;
@@ -128,9 +132,9 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
 
     @Override
     public void setDefault() {
-        outputIDFieldName = "ftl.output";
-        firstVariableName = "ftl.isFirstRow";
-        lastVariableName = "ftl.isLastRow";
+        outputIDFieldName = OUTPUT_ID_FIELD_NAME_DEFAULT;
+        firstVariableName = FIRST_VARIABLE_NAME_DEFAULT;
+        lastVariableName = LAST_VARIABLE_NAME_DEFAULT;
         templateString = "";
         templateFile = "";
         useTemplateFile = false;
