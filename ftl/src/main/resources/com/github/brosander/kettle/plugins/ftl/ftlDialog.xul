@@ -55,6 +55,16 @@
             <textbox id="output-field" flex="1" multiline="false"/>
             <image src="${Variable_image}" />
         </hbox>
+        <hbox id="first-variable-box">
+            <label value="${FTL.FirstVariable.Label}" />
+            <textbox id="first-variable-field" flex="1" multiline="false"/>
+            <image src="${Variable_image}" />
+        </hbox>
+        <hbox id="last-variable-box">
+            <label value="${FTL.LastVariable.Label}" />
+            <textbox id="last-variable-field" flex="1" multiline="false"/>
+            <image src="${Variable_image}" />
+        </hbox>
     </vbox>
     <tabbox>
         <tabs id="tabs">

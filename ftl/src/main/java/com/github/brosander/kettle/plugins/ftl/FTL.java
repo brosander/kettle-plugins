@@ -25,6 +25,8 @@ import java.util.Map;
 public class FTL extends BaseStep implements StepInterface {
     private FTLMeta meta;
     private FTLData data;
+    private Object[] nextRow;
+    private RowMetaInterface nextRowMeta;
 
     public FTL(StepMeta stepMeta, StepDataInterface stepDataInterface, int copyNr, TransMeta transMeta, Trans trans) {
         super(stepMeta, stepDataInterface, copyNr, transMeta, trans);
@@ -34,14 +36,12 @@ public class FTL extends BaseStep implements StepInterface {
     public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws KettleException {
         meta = (FTLMeta) smi;
         data = (FTLData) sdi;
-        Object[] inputRow = getRow();
-        RowMetaInterface inputRowMeta = getInputRowMeta();
 
-        if (inputRow == null) {
-            setOutputDone();
-            return false;
-        }
+        final Map<String, Object> templateMap = new HashMap<String, Object>();
+        templateMap.put(environmentSubstitute(meta.getFirstVariableName()), first);
 
+        final Object[] thisRow;
+        final RowMetaInterface thisRowMeta;
         if (first) {
             final Configuration config = new Configuration();
             final StringTemplateLoader templateLoader = new StringTemplateLoader();
@@ -60,23 +60,39 @@ public class FTL extends BaseStep implements StepInterface {
             }
 
             String outputField = environmentSubstitute(meta.getOutputIDFieldName());
-            data.setOutputRowMeta(getInputRowMeta().clone());
+            thisRow = getRow();
+            thisRowMeta = getInputRowMeta();
+            data.setOutputRowMeta(thisRowMeta.clone());
             meta.getFields(data.getOutputRowMeta(), getStepname(), null, null, this, repository, metaStore);
             data.setFieldIndex(data.getOutputRowMeta().indexOfValue(outputField));
             first = false;
+        } else {
+            thisRow = nextRow;
+            thisRowMeta = nextRowMeta;
         }
 
-        Map<String, Object> templateMap = new HashMap<String, Object>();
+        nextRow = getRow();
+        nextRowMeta = getInputRowMeta();
+        if (nextRow == null) {
+            templateMap.put(environmentSubstitute(meta.getLastVariableName()), true);
+        } else {
+            templateMap.put(environmentSubstitute(meta.getLastVariableName()), false);
+        }
+
+        if (thisRow == null) {
+            setOutputDone();
+            return false;
+        }
 
         for (String variable : listVariables()) {
             templateMap.put(variable, getVariable(variable));
         }
 
-        for (int i = 0; i < inputRowMeta.size(); i++) {
-            templateMap.put(inputRowMeta.getValueMeta(i).getName(), inputRow[i]);
+        for (int i = 0; i < thisRowMeta.size(); i++) {
+            templateMap.put(thisRowMeta.getValueMeta(i).getName(), thisRow[i]);
         }
 
-        Object[] outputRow = RowDataUtil.resizeArray(inputRow, data.getOutputRowMeta().size());
+        Object[] outputRow = RowDataUtil.resizeArray(thisRow, data.getOutputRowMeta().size());
         StringWriter stringWriter = new StringWriter();
         try {
             data.getTemplate().process(templateMap, stringWriter);

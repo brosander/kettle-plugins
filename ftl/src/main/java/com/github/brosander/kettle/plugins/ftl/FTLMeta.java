@@ -15,7 +15,11 @@ import org.pentaho.di.repository.ObjectId;
 import org.pentaho.di.repository.Repository;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
-import org.pentaho.di.trans.step.*;
+import org.pentaho.di.trans.step.BaseStepMeta;
+import org.pentaho.di.trans.step.StepDataInterface;
+import org.pentaho.di.trans.step.StepInterface;
+import org.pentaho.di.trans.step.StepMeta;
+import org.pentaho.di.trans.step.StepMetaInterface;
 import org.pentaho.metastore.api.IMetaStore;
 import org.w3c.dom.Node;
 
@@ -30,12 +34,16 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     private static final Class<?> PKG = FTLMeta.class;
 
     public static final String OUTPUT_ID_FIELD_NAME_FIELD = "outputIDFieldName";
+    public static final String FIRST_VARIABLE_NAME = "firstVariableName";
+    public static final String LAST_VARIABLE_NAME = "lastVariableName";
     public static final String TEMPLATE_STRING_FIELD = "templateString";
     public static final String TEMPLATE_FILE_FIELD = "templateFile";
     public static final String USE_TEMPLATE_FILE_FIELD = "useTemplateFile";
     public static final String TEMPLATE_FILE_ENCODING_FIELD = "templateFileEncoding";
 
     private String outputIDFieldName = "ftl.output";
+    private String firstVariableName = "ftl.isFirstRow";
+    private String lastVariableName = "ftl.isLastRow";
     private String templateString = "";
     private String templateFile = "";
     private boolean useTemplateFile = false;
@@ -46,20 +54,40 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     }
 
     public void setOutputIDFieldName(String outputIDFieldName) {
-        if (this.outputIDFieldName != null &&
-            !this.outputIDFieldName.equals(outputIDFieldName)) {
+        if (this.outputIDFieldName == null || !this.outputIDFieldName.equals(outputIDFieldName)) {
             setChanged();
         }
         this.outputIDFieldName = outputIDFieldName;
+    }
+
+    public String getFirstVariableName() {
+        return firstVariableName;
+    }
+
+    public void setFirstVariableName(String firstVariableName) {
+        if (this.firstVariableName == null || !this.firstVariableName.equals(firstVariableName)) {
+            setChanged();
+        }
+        this.firstVariableName = firstVariableName;
+    }
+
+    public String getLastVariableName() {
+        if (this.lastVariableName == null || !this.lastVariableName.equals(lastVariableName)) {
+            setChanged();
+        }
+        return lastVariableName;
+    }
+
+    public void setLastVariableName(String lastVariableName) {
+        this.lastVariableName = lastVariableName;
     }
 
     public String getTemplateString() {
         return templateString;
     }
 
-    public void setTemplateString(String templateString){
-        if (this.templateString != null &&
-            !this.templateString.equals(templateString)) {
+    public void setTemplateString(String templateString) {
+        if (this.templateString == null || !this.templateString.equals(templateString)) {
             setChanged();
         }
         this.templateString = templateString;
@@ -70,7 +98,7 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     }
 
     public void setTemplateFile(String templateFile) {
-        if ( this.templateFile != null && !this.templateFile.equals(templateFile)) {
+        if (this.templateFile == null || !this.templateFile.equals(templateFile)) {
             setChanged();
         }
         this.templateFile = templateFile;
@@ -85,8 +113,7 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     }
 
     public void setTemplateFileEncoding(String templateFileEncoding) {
-        if (this.templateFileEncoding != null &&
-            !this.templateFileEncoding.equals(templateFileEncoding)) {
+        if (this.templateFileEncoding == null || !this.templateFileEncoding.equals(templateFileEncoding)) {
             setChanged();
         }
         this.templateFileEncoding = templateFileEncoding;
@@ -102,6 +129,8 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     @Override
     public void setDefault() {
         outputIDFieldName = "ftl.output";
+        firstVariableName = "ftl.isFirstRow";
+        lastVariableName = "ftl.isLastRow";
         templateString = "";
         templateFile = "";
         useTemplateFile = false;
@@ -146,6 +175,8 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
     public String getXML() throws KettleException {
         StringBuilder retval = new StringBuilder();
         retval.append("    ").append(XMLHandler.addTagValue(OUTPUT_ID_FIELD_NAME_FIELD, outputIDFieldName));
+        retval.append("    ").append(XMLHandler.addTagValue(FIRST_VARIABLE_NAME, firstVariableName));
+        retval.append("    ").append(XMLHandler.addTagValue(LAST_VARIABLE_NAME, lastVariableName));
         retval.append("    ").append(XMLHandler.addTagValue(TEMPLATE_STRING_FIELD, templateString));
         retval.append("    ").append(XMLHandler.addTagValue(TEMPLATE_FILE_FIELD, templateFile));
         retval.append("    ").append(XMLHandler.addTagValue(USE_TEMPLATE_FILE_FIELD, useTemplateFile));
@@ -155,28 +186,34 @@ public class FTLMeta extends BaseStepMeta implements StepMetaInterface {
 
     @Override
     public void loadXML(Node stepnode, List<DatabaseMeta> databases, IMetaStore metaStore) throws KettleXMLException {
-        outputIDFieldName = XMLHandler.getTagValue( stepnode, OUTPUT_ID_FIELD_NAME_FIELD);
-        templateString = XMLHandler.getTagValue( stepnode, TEMPLATE_STRING_FIELD);
-        templateFile = XMLHandler.getTagValue( stepnode, TEMPLATE_FILE_FIELD);
-        useTemplateFile = "Y".equalsIgnoreCase(XMLHandler.getTagValue( stepnode, USE_TEMPLATE_FILE_FIELD));
-        templateFileEncoding = XMLHandler.getTagValue( stepnode, TEMPLATE_FILE_ENCODING_FIELD);
+        outputIDFieldName = XMLHandler.getTagValue(stepnode, OUTPUT_ID_FIELD_NAME_FIELD);
+        firstVariableName = XMLHandler.getTagValue(stepnode, FIRST_VARIABLE_NAME);
+        lastVariableName = XMLHandler.getTagValue(stepnode, LAST_VARIABLE_NAME);
+        templateString = XMLHandler.getTagValue(stepnode, TEMPLATE_STRING_FIELD);
+        templateFile = XMLHandler.getTagValue(stepnode, TEMPLATE_FILE_FIELD);
+        useTemplateFile = "Y".equalsIgnoreCase(XMLHandler.getTagValue(stepnode, USE_TEMPLATE_FILE_FIELD));
+        templateFileEncoding = XMLHandler.getTagValue(stepnode, TEMPLATE_FILE_ENCODING_FIELD);
     }
 
     @Override
     public void saveRep(Repository rep, IMetaStore metaStore, ObjectId id_transformation, ObjectId id_step) throws KettleException {
-        rep.saveStepAttribute( id_transformation, id_step, OUTPUT_ID_FIELD_NAME_FIELD, outputIDFieldName);
-        rep.saveStepAttribute( id_transformation, id_step, TEMPLATE_STRING_FIELD, templateString);
-        rep.saveStepAttribute( id_transformation, id_step, TEMPLATE_FILE_FIELD, templateFile);
-        rep.saveStepAttribute( id_transformation, id_step, USE_TEMPLATE_FILE_FIELD, useTemplateFile);
-        rep.saveStepAttribute( id_transformation, id_step, TEMPLATE_FILE_ENCODING_FIELD, templateFileEncoding);
+        rep.saveStepAttribute(id_transformation, id_step, OUTPUT_ID_FIELD_NAME_FIELD, outputIDFieldName);
+        rep.saveStepAttribute(id_transformation, id_step, FIRST_VARIABLE_NAME, firstVariableName);
+        rep.saveStepAttribute(id_transformation, id_step, LAST_VARIABLE_NAME, lastVariableName);
+        rep.saveStepAttribute(id_transformation, id_step, TEMPLATE_STRING_FIELD, templateString);
+        rep.saveStepAttribute(id_transformation, id_step, TEMPLATE_FILE_FIELD, templateFile);
+        rep.saveStepAttribute(id_transformation, id_step, USE_TEMPLATE_FILE_FIELD, useTemplateFile);
+        rep.saveStepAttribute(id_transformation, id_step, TEMPLATE_FILE_ENCODING_FIELD, templateFileEncoding);
     }
 
     @Override
     public void readRep(Repository rep, IMetaStore metaStore, ObjectId id_step, List<DatabaseMeta> databases) throws KettleException {
-        outputIDFieldName = rep.getStepAttributeString( id_step, OUTPUT_ID_FIELD_NAME_FIELD);
-        templateString = rep.getStepAttributeString( id_step, TEMPLATE_STRING_FIELD);
-        templateFile = rep.getStepAttributeString( id_step, TEMPLATE_FILE_FIELD);
-        useTemplateFile = rep.getStepAttributeBoolean( id_step, USE_TEMPLATE_FILE_FIELD);
-        templateFileEncoding = rep.getStepAttributeString( id_step, TEMPLATE_FILE_ENCODING_FIELD);
+        outputIDFieldName = rep.getStepAttributeString(id_step, OUTPUT_ID_FIELD_NAME_FIELD);
+        firstVariableName = rep.getStepAttributeString(id_step, FIRST_VARIABLE_NAME);
+        lastVariableName = rep.getStepAttributeString(id_step, LAST_VARIABLE_NAME);
+        templateString = rep.getStepAttributeString(id_step, TEMPLATE_STRING_FIELD);
+        templateFile = rep.getStepAttributeString(id_step, TEMPLATE_FILE_FIELD);
+        useTemplateFile = rep.getStepAttributeBoolean(id_step, USE_TEMPLATE_FILE_FIELD);
+        templateFileEncoding = rep.getStepAttributeString(id_step, TEMPLATE_FILE_ENCODING_FIELD);
     }
 }

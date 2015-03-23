@@ -23,6 +23,8 @@ public class FTLDialog extends BaseStepXulDialog {
     private List<FTLValueMetaEventSourceAdapter> valueMetaInterfaces;
 
     private String outputIDFieldName = null;
+    private String firstVariableName = null;
+    private String lastVariableName = null;
     private String templateString = "";
     private String templateFile = "";
     private boolean useTemplateFile = false;
@@ -49,6 +51,8 @@ public class FTLDialog extends BaseStepXulDialog {
             bf.setBindingType(Binding.Type.BI_DIRECTIONAL);
             bf.createBinding(this, "tempStepName", "step-name", "value").fireSourceChanged();
             bf.createBinding(this, FTLMeta.OUTPUT_ID_FIELD_NAME_FIELD, "output-field", "value").fireSourceChanged();
+            bf.createBinding(this, FTLMeta.FIRST_VARIABLE_NAME, "first-variable-field", "value").fireSourceChanged();
+            bf.createBinding(this, FTLMeta.LAST_VARIABLE_NAME, "last-variable-field", "value").fireSourceChanged();
             bf.createBinding(this, FTLMeta.TEMPLATE_STRING_FIELD, "template-string", "value").fireSourceChanged();
             bf.createBinding(this, FTLMeta.TEMPLATE_FILE_FIELD, "template-file", "value").fireSourceChanged();
             bf.createBinding(this, FTLMeta.USE_TEMPLATE_FILE_FIELD, "template-usefile-checkbox", "checked").fireSourceChanged();
@@ -101,6 +105,22 @@ public class FTLDialog extends BaseStepXulDialog {
         this.outputIDFieldName = outputIDFieldName;
     }
 
+    public String getFirstVariableName() {
+        return firstVariableName;
+    }
+
+    public void setFirstVariableName(String firstVariableName) {
+        this.firstVariableName = firstVariableName;
+    }
+
+    public String getLastVariableName() {
+        return lastVariableName;
+    }
+
+    public void setLastVariableName(String lastVariableName) {
+        this.lastVariableName = lastVariableName;
+    }
+
     public String getTemplateString() {
         return templateString;
     }
@@ -151,6 +171,8 @@ public class FTLDialog extends BaseStepXulDialog {
 
     public void saveMeta(FTLMeta meta) {
         meta.setOutputIDFieldName(outputIDFieldName);
+        meta.setFirstVariableName(firstVariableName);
+        meta.setLastVariableName(lastVariableName);
         meta.setTemplateString(templateString);
         meta.setTemplateFile(templateFile);
         meta.setUseTemplateFile(useTemplateFile);
@@ -159,6 +181,8 @@ public class FTLDialog extends BaseStepXulDialog {
 
     public void loadMeta(FTLMeta meta) {
         outputIDFieldName = meta.getOutputIDFieldName();
+        firstVariableName = meta.getFirstVariableName();
+        lastVariableName = meta.getLastVariableName();
         templateString = meta.getTemplateString();
         templateFile = meta.getTemplateFile();
         useTemplateFile = meta.isUseTemplateFile();
